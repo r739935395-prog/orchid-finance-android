@@ -54,27 +54,27 @@ abstract class AppDatabase : RoomDatabase() {
             super.onCreate(db)
             // seed accounts
             val accounts = listOf(
-                Triple("1000","النقدية|Cash|Assets|asset|debit"),
-                Triple("1010","البنك|Bank|Assets|asset|debit"),
-                Triple("1100","العملاء|Accounts Receivable|Assets|asset|debit"),
-                Triple("1200","المخزون|Inventory|Assets|asset|debit"),
-                Triple("1300","ضريبة مدفوعة مقدماً|Input VAT|Assets|asset|debit"),
-                Triple("2000","الموردون|Accounts Payable|Liabilities|liability|credit"),
-                Triple("2100","الضرائب المستحقة|Taxes Payable|Liabilities|liability|credit"),
-                Triple("3000","رأس المال|Owner's Equity|Equity|equity|credit"),
-                Triple("3100","الأرباح المحتجزة|Retained Earnings|Equity|equity|credit"),
-                Triple("4000","المبيعات|Sales Revenue|Revenue|income|credit"),
-                Triple("4100","مرتجعات المبيعات|Sales Returns|Revenue|income|debit"),
-                Triple("4200","إيرادات أخرى|Other Income|Other Income|income|credit"),
-                Triple("5000","تكلفة المبيعات|Cost of Goods Sold|COGS|expense|debit"),
-                Triple("5100","المشتريات|Purchases|Purchases|expense|debit"),
-                Triple("5200","مرتجعات المشتريات|Purchase Returns|Purchases|income|credit"),
-                Triple("6000","مصروفات تشغيلية|Operating Expenses|Expenses|expense|debit"),
-                Triple("6100","رواتب|Salaries|Expenses|expense|debit"),
-                Triple("6200","إيجار|Rent|Expenses|expense|debit"),
-                Triple("6300","كهرباء وماء|Utilities|Expenses|expense|debit"),
-                Triple("6400","تسويق|Marketing|Expenses|expense|debit"),
-                Triple("9000","أرباح/خسائر مجمّعة|Profit / Loss Summary|Equity|equity|credit")
+                "1000" to "النقدية|Cash|Assets|asset|debit",
+                "1010" to "البنك|Bank|Assets|asset|debit",
+                "1100" to "العملاء|Accounts Receivable|Assets|asset|debit",
+                "1200" to "المخزون|Inventory|Assets|asset|debit",
+                "1300" to "ضريبة مدفوعة مقدماً|Input VAT|Assets|asset|debit",
+                "2000" to "الموردون|Accounts Payable|Liabilities|liability|credit",
+                "2100" to "الضرائب المستحقة|Taxes Payable|Liabilities|liability|credit",
+                "3000" to "رأس المال|Owner's Equity|Equity|equity|credit",
+                "3100" to "الأرباح المحتجزة|Retained Earnings|Equity|equity|credit",
+                "4000" to "المبيعات|Sales Revenue|Revenue|income|credit",
+                "4100" to "مرتجعات المبيعات|Sales Returns|Revenue|income|debit",
+                "4200" to "إيرادات أخرى|Other Income|Other Income|income|credit",
+                "5000" to "تكلفة المبيعات|Cost of Goods Sold|COGS|expense|debit",
+                "5100" to "المشتريات|Purchases|Purchases|expense|debit",
+                "5200" to "مرتجعات المشتريات|Purchase Returns|Purchases|income|credit",
+                "6000" to "مصروفات تشغيلية|Operating Expenses|Expenses|expense|debit",
+                "6100" to "رواتب|Salaries|Expenses|expense|debit",
+                "6200" to "إيجار|Rent|Expenses|expense|debit",
+                "6300" to "كهرباء وماء|Utilities|Expenses|expense|debit",
+                "6400" to "تسويق|Marketing|Expenses|expense|debit",
+                "9000" to "أرباح/خسائر مجمّعة|Profit / Loss Summary|Equity|equity|credit"
             )
             accounts.forEach { (code, rest) ->
                 val p = rest.split("|")

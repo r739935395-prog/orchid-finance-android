@@ -33,17 +33,24 @@ object Passwords {
         val digest = skf.generateSecret(spec).encoded
         return "pbkdf2_sha256$${ITER}$${salt.joinToString("") { "%02x".format(it) }}$${digest.joinToString("") { "%02x".format(it) }}"
     }
-    fun verify(password: String, stored: String): Boolean = try {
-        val parts = stored.split("$")
-        if (parts.size != 4 || parts[0] != "pbkdf2_sha256") return false
-        val iter = parts[1].toInt()
-        val salt = parts[2].chunked(2).map { it.toInt(16).toByte() }.toByteArray()
-        val expected = parts[3]
-        val spec = PBEKeySpec(password.toCharArray(), salt, iter, 256)
-        val skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
-        val digest = skf.generateSecret(spec).encoded.joinToString("") { "%02x".format(it) }
-        digest == expected
-    } catch (e: Exception) { false }
+    fun verify(password: String, stored: String): Boolean {
+        return try {
+            val parts = stored.split("$")
+            if (parts.size != 4 || parts[0] != "pbkdf2_sha256") {
+                false
+            } else {
+                val iter = parts[1].toInt()
+                val salt = parts[2].chunked(2).map { it.toInt(16).toByte() }.toByteArray()
+                val expected = parts[3]
+                val spec = PBEKeySpec(password.toCharArray(), salt, iter, 256)
+                val skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+                val digest = skf.generateSecret(spec).encoded.joinToString("") { "%02x".format(it) }
+                digest == expected
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
 }
 
 data class JournalLineInput(
