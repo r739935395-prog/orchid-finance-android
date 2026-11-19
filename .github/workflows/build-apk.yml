@@ -50,8 +50,18 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          yes | "$SDKMANAGER" --licenses || true
-          yes | "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          # Accept licenses (ignore broken-pipe from `yes` when sdkmanager exits)
+          yes | "$SDKMANAGER" --licenses >/dev/null 2>&1 || true
+          # Install required components; tolerate SIGPIPE from `yes` if sdkmanager succeeds
+          yes | "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.0" || {
+            sdk_rc=${PIPESTATUS[1]:-1}
+            yes_rc=${PIPESTATUS[0]:-0}
+            if [ "$sdk_rc" -ne 0 ]; then
+              echo "sdkmanager install failed with exit code $sdk_rc" >&2
+              exit "$sdk_rc"
+            fi
+            echo "Ignoring yes exit code $yes_rc after successful sdkmanager install"
+          }
 
       - name: Configure SDK path
         run: echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
